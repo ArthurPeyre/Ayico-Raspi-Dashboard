@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Raspberry Pi Monitor</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+    }
+  </style>
+</head>
+<body>
+  <h1>📊 Raspberry Pi – Monitoring</h1>
+
+  <ul style="list-style: none; margin: 0; padding: 0;">
+    <li>🌡️ Température : <span id="temp">--</span> °C</li>
+    <li>⚙️ CPU load : <span id="cpu">--</span></li>
+    <li>🧠 RAM : <span id="ram">--</span></li>
+    <li>💾 Disque : <span id="disk">--</span></li>
+  </ul>
+
+  <script>
+    function refresh() {
+      fetch('/api/dashboard')
+        .then(r => r.json())
+        .then(d => {
+          document.getElementById('temp').innerText = d.temperature;
+          document.getElementById('cpu').innerText = d.cpu_load;
+          document.getElementById('ram').innerText =
+            d.ram.used + " / " + d.ram.total + " MB";
+          document.getElementById('disk').innerText =
+            d.disk.used + " / " + d.disk.total + " GB";
+        });
+    }
+
+    refresh();
+    setInterval(refresh, 2000); // ⏱️ toutes les 2 secondes
+  </script>
+</body>
+</html>
