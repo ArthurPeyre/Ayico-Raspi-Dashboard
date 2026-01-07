@@ -42,7 +42,11 @@
             d.ram.used + " / " + d.ram.total + " MB";
           document.getElementById('disk').innerText =
             d.disk.used + " / " + d.disk.total + " GB";
-          document.getElementById('uptime').innerHTML = d.uptime;
+          // document.getElementById('uptime').innerHTML = d.uptime;
+          // document.getElementById('dockerContainers').innerText = "";
+          // for (const container of d.docker_containers) {
+          //   document.getElementById('dockerContainers').innerText += `<li>Nom: ${container.name} | Status: ${container.status}</li>`;
+          // }
         });
     }
 

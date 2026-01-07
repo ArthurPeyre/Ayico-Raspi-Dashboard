@@ -58,7 +58,7 @@ def stats():
         "ram": get_ram(),
         "disk": get_disk(),
         "uptime": get_uptime(),
-        "docker_containers": get_docker_containers()
+        # "docker_containers": get_docker_containers()
     })
 
 app.run(host="0.0.0.0", port=5000)
