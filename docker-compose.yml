@@ -15,7 +15,7 @@ services:
       - "80:80"
     volumes:
       - ./raspi-dashboard/default.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./raspi-dashboard/index.html:/usr/share/nginx/html/index.html:ro
+      - ./raspi-dashboard:/usr/share/nginx/html:ro
     depends_on:
       - raspi-api
     restart: unless-stopped
