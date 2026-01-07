@@ -7,6 +7,7 @@ services:
       - /sys/class/thermal/thermal_zone0/temp:/sys/class/thermal/thermal_zone0/temp:ro
       - /proc:/proc:ro
       - /:/host:ro
+      - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
 
   raspi-dashboard:
