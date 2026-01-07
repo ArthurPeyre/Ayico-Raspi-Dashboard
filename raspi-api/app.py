@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 import os
 import shutil
-import docker
+# import docker
 
 app = Flask(__name__)
 
