@@ -45,7 +45,7 @@
           document.getElementById('uptime').innerHTML = d.uptime;
           document.getElementById('dockerContainers').innerText = "";
           for (const container of d.docker_containers) {
-            document.getElementById('dockerContainers').innerText += `<li>Nom: ${container.name} | Status: ${container.status}</li>`;
+            document.getElementById('dockerContainers').innerHTML += `<li>Nom: ${container.name} | Status: ${container.status}</li>`;
           }
         });
     }
