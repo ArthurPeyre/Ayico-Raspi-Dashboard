@@ -57,7 +57,7 @@ def stats():
         "cpu_load": get_cpu_load(),
         "ram": get_ram(),
         "disk": get_disk(),
-        "uptime": get_uptime()
+        "uptime": get_uptime(),
         "docker_containers": get_docker_containers()
     })
 
