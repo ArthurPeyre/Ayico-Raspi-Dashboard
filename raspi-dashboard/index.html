@@ -43,7 +43,7 @@
           document.getElementById('disk').innerText =
             d.disk.used + " / " + d.disk.total + " GB";
           document.getElementById('uptime').innerHTML = d.uptime;
-          for (container in d.docker_containers) {
+          for (const container of d.docker_containers) {
             document.getElementById('dockerContainers').innerText += `<li>Nom: ${container.name} | Status: ${container.status}</li>`;
           }
         });
