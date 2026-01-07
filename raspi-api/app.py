@@ -35,16 +35,17 @@ def get_disk():
 def get_uptime():
     with open("/proc/uptime") as f:
         uptime_seconds = float(f.readline().split()[0])
-    hours = int(uptime_seconds // 3600)
+
+    days = int(uptime_seconds // 86400)
+    hours = int((uptime_seconds % 86400) // 3600)
     minutes = int((uptime_seconds % 3600) // 60)
     seconds = int(uptime_seconds % 60)
-    return f"{hours}h {minutes}m {seconds}s"
+
+    return f"{days}d {hours}h {minutes}m {seconds}s"
 
 
 @app.route("/dashboard")
 def stats():
-    uptime = get_uptime()
-    print("DEBUG uptime:", uptime)  # <--- vérifie que ça fonctionne
     return jsonify({
         "temperature": get_cpu_temp(),
         "cpu_load": get_cpu_load(),
