@@ -32,6 +32,15 @@ def get_disk():
         "total": round(total / (1024**3), 1)
     }
 
+def get_uptime():
+    with open("/proc/uptime") as f:
+        uptime_seconds = float(f.readline().split()[0])
+    hours = int(uptime_seconds // 3600)
+    minutes = int((uptime_seconds % 3600) // 60)
+    seconds = int(uptime_seconds % 60)
+    return f"{hours}h {minutes}m {seconds}s"
+
+
 @app.route("/dashboard")
 def stats():
     return jsonify({
