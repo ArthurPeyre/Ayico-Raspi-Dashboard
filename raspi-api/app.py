@@ -44,10 +44,10 @@ def get_uptime():
 
     return f"{days}d {hours}h {minutes}m {seconds}s"
 
-def get_docker_containers():
-    client = docker.from_env()
-    containers = client.containers.list()
-    return [{"name": c.name, "status": c.status} for c in containers]
+# def get_docker_containers():
+#     client = docker.from_env()
+#     containers = client.containers.list()
+#     return [{"name": c.name, "status": c.status} for c in containers]
 
 
 @app.route("/dashboard")
@@ -57,7 +57,7 @@ def stats():
         "cpu_load": get_cpu_load(),
         "ram": get_ram(),
         "disk": get_disk(),
-        "uptime": get_uptime(),
+        "uptime": get_uptime()
         # "docker_containers": get_docker_containers()
     })
 
