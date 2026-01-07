@@ -43,6 +43,8 @@ def get_uptime():
 
 @app.route("/dashboard")
 def stats():
+    uptime = get_uptime()
+    print("DEBUG uptime:", uptime)  # <--- vérifie que ça fonctionne
     return jsonify({
         "temperature": get_cpu_temp(),
         "cpu_load": get_cpu_load(),
