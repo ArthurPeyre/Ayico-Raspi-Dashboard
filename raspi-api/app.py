@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 import os
 import shutil
+import docker
 
 app = Flask(__name__)
 
@@ -43,6 +44,11 @@ def get_uptime():
 
     return f"{days}d {hours}h {minutes}m {seconds}s"
 
+def get_docker_containers():
+    client = docker.from_env()
+    containers = client.containers.list()
+    return [{"name": c.name, "status": c.status} for c in containers]
+
 
 @app.route("/dashboard")
 def stats():
@@ -51,7 +57,8 @@ def stats():
         "cpu_load": get_cpu_load(),
         "ram": get_ram(),
         "disk": get_disk(),
-        "uptime": get_uptime()
+        "uptime": get_uptime(),
+        "docker_containers": get_docker_containers()
     })
 
 app.run(host="0.0.0.0", port=5000)

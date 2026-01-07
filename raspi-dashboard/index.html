@@ -21,6 +21,11 @@
         <li>🧠 RAM : <span id="ram">--</span></li>
         <li>💾 Disque : <span id="disk">--</span></li>
       </div>
+
+      <div class="section">
+        <h2>Docker Containers</h2>
+        <div id="dockerContainers"></div>
+      </div>
     </main>
   </div>
 
@@ -38,6 +43,9 @@
           document.getElementById('disk').innerText =
             d.disk.used + " / " + d.disk.total + " GB";
           document.getElementById('uptime').innerHTML = d.uptime;
+          for (container in d.docker_containers) {
+            document.getElementById('dockerContainers').innerText += `<li>Nom: ${container.name} | Status: ${container.status}</li>`;
+          }
         });
     }
 
