@@ -3,21 +3,28 @@
 <head>
   <meta charset="utf-8">
   <title>Raspberry Pi Monitor</title>
-  <style>
-    :root {
-      color-scheme: light dark;
-    }
-  </style>
+
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <h1>📊 Raspberry Pi 5 – Monitoring</h1>
 
-  <ul style="list-style: none; margin: 0; padding: 0;">
-    <li>🌡️ Température : <span id="temp">--</span> °C</li>
-    <li>⚙️ CPU load : <span id="cpu">--</span></li>
-    <li>🧠 RAM : <span id="ram">--</span></li>
-    <li>💾 Disque : <span id="disk">--</span></li>
-  </ul>
+  <div id="app">
+    <header>
+      <h1>Raspberry Pi 5 – Monitoring</h1>
+      <p>Up depuis ...</p>
+    </header>
+
+    <main>
+      <div class="section">
+        <li>🌡️ Température : <span id="temp">--</span> °C</li>
+        <li>⚙️ CPU load : <span id="cpu">--</span></li>
+        <li>🧠 RAM : <span id="ram">--</span></li>
+        <li>💾 Disque : <span id="disk">--</span></li>
+      </div>
+    </main>
+  </div>
+
+
 
   <script>
     function refresh() {
@@ -34,7 +41,7 @@
     }
 
     refresh();
-    setInterval(refresh, 2000); // ⏱️ toutes les 2 secondes
+    setInterval(refresh, 2000); // Call API every 2s
   </script>
 </body>
 </html>
