@@ -47,7 +47,8 @@ def stats():
         "temperature": get_cpu_temp(),
         "cpu_load": get_cpu_load(),
         "ram": get_ram(),
-        "disk": get_disk()
+        "disk": get_disk(),
+        "uptime": get_uptime()
     })
 
 app.run(host="0.0.0.0", port=5000)

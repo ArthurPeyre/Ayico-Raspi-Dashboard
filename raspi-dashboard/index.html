@@ -11,7 +11,7 @@
   <div id="app">
     <header>
       <h1>Raspberry Pi 5 – Monitoring</h1>
-      <p>Up depuis ...</p>
+      <p>Up depuis <span id="uptime">--</span></p>
     </header>
 
     <main>
@@ -37,6 +37,7 @@
             d.ram.used + " / " + d.ram.total + " MB";
           document.getElementById('disk').innerText =
             d.disk.used + " / " + d.disk.total + " GB";
+          document.getElementById('uptime').innerHTML = d.uptime;
         });
     }
 
