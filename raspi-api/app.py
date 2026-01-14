@@ -47,7 +47,7 @@ def get_uptime():
 def get_docker_containers():
     client = docker.from_env()
     containers = client.containers.list()
-    return [{"name": c.name, "image": c.image, "status": c.status} for c in containers]
+    return [{"name": c.name, "image": c.image.tags[0] if c.image.tags else "unknown", "status": c.status} for c in containers]
 
 
 @app.route("/dashboard")
