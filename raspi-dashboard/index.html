@@ -19,9 +19,8 @@
       <div class="section">
         <li>🌡️ Température : <span id="temp">--</span> °C</li>
         <li>⚙️ CPU load : <span id="cpu">--</span></li>
-        <li>🧠 RAM : <span id="ram">--</span></li>
-        <li>💾 Disque : <span id="disk">--</span></li>
-        lol
+        <li>🧠 RAM : <span id="ramU">--</span> / <span id="ramT">--</span> MB</li>
+        <li>💾 Disque : <span id="diskU">--</span> / <span id="diskT">--</span> GB</li>
       </div>
 
       <div class="section">
@@ -34,26 +33,45 @@
 
 
   <script>
+    const data = {
+      temp: document.getElementById('temp'),
+      cpu: document.getElementById('cpu'),
+      ram: {
+        used: document.getElementById('ramU'),
+        total: document.getElementById('ramT')
+      },
+      disk: {
+        used: document.getElementById('diskU'),
+        total: document.getElementById('diskT')
+      },
+      uptime: document.getElementById('uptime'),
+      dockerContainers: document.getElementById('dockerContainers')
+    }
+
     function refresh() {
       fetch('/api/dashboard')
         .then(r => r.json())
         .then(d => {
-          document.getElementById('temp').innerText = d.temperature;
-          document.getElementById('cpu').innerText = d.cpu_load;
-          document.getElementById('ram').innerText =
-            d.ram.used + " / " + d.ram.total + " MB";
-          document.getElementById('disk').innerText =
-            d.disk.used + " / " + d.disk.total + " GB";
-          document.getElementById('uptime').innerHTML = d.uptime;
-          document.getElementById('dockerContainers').innerText = "";
+          data.temp.innerText = d.temperature;
+          data.cpu.innerText = d.cpu_load;
+          data.ram.used.innerText = d.ram.used;
+          data.ram.total.innerText = d.ram.total;
+          data.disk.used.innerText = d.disk.used;
+          data.disk.total.innerText = d.disk.total;
+          data.uptime.innerText = d.uptime;
+          data.dockerContainers.innerHTML = "";
           for (const container of d.docker_containers) {
-            document.getElementById('dockerContainers').innerHTML += `<li>Nom: ${container.name} | Image: ${container.image} | Status: ${container.status}</li>`;
+            data.dockerContainers.innerHTML += `<li>Nom: ${container.name} | Image: ${container.image} | Status: ${container.status}</li>`;
           }
         });
     }
 
-    refresh();
-    setInterval(refresh, 2000); // Call API every 2s
+
+    window.addEventListener('DOMContentLoaded', () => {
+      refresh();
+      setInterval(refresh, 2000); // Call API every 2s
+    });
+
   </script>
 </body>
 </html>
