@@ -19,7 +19,7 @@
       <div class="section">
         <li>🌡️ Température : <span id="temp">--</span> °C</li>
         <li>⚙️ CPU load : <span id="cpu">--</span></li>
-        <li>🧠 RAM : <span id="ramU">--</span> / <span id="ramT">--</span> MB</li>
+        <li>🧠 RAM : <span id="ramU">--</span> / <span id="ramT">--</span> MB - Average : <span id="ramAverage">--</span> MB</li>
         <li>💾 Disque : <span id="diskU">--</span> / <span id="diskT">--</span> GB</li>
       </div>
 
@@ -38,7 +38,8 @@
       cpu: document.getElementById('cpu'),
       ram: {
         used: document.getElementById('ramU'),
-        total: document.getElementById('ramT')
+        total: document.getElementById('ramT'),
+        history: []
       },
       disk: {
         used: document.getElementById('diskU'),
@@ -48,17 +49,44 @@
       dockerContainers: document.getElementById('dockerContainers')
     }
 
+    const setRam = (val) => {
+      if (data.ram.total !== val.total) {
+        data.ram.total.innerText = val.total;
+      }
+      if (data.ram.used.innerText !== val.used) {
+        data.ram.used.innerText = val.used;
+      }
+      if (data.ram.history.length >= 10) {
+        data.ram.history.shift();
+      }
+      data.ram.history.push(val.used);
+      const average = (data.ram.history.reduce((acc, val) => acc + val, 0) / data.ram.history.length);
+      document.getElementById("ramAverage").innerText = average.toFixed(1);
+    }
+
+    const setDisk = (val) => {
+      if (data.disk.total !== val.total) {
+        data.disk.total.innerText = val.total;
+      }
+      if (data.disk.used.innerText !== val.used) {
+        data.disk.used.innerText = val.used;
+      }
+    }
+
     function refresh() {
       fetch('/api/dashboard')
         .then(r => r.json())
         .then(d => {
           data.temp.innerText = d.temperature;
+
           data.cpu.innerText = d.cpu_load;
-          data.ram.used.innerText = d.ram.used;
-          data.ram.total.innerText = d.ram.total;
-          data.disk.used.innerText = d.disk.used;
-          data.disk.total.innerText = d.disk.total;
+
+          setRam(d.ram)
+
+          setDisk(d.disk);
+
           data.uptime.innerText = d.uptime;
+
           data.dockerContainers.innerHTML = "";
           for (const container of d.docker_containers) {
             data.dockerContainers.innerHTML += `<li>Nom: ${container.name} | Image: ${container.image} | Status: ${container.status}</li>`;
@@ -69,7 +97,7 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       refresh();
-      setInterval(refresh, 2000); // Call API every 2s
+      setInterval(refresh, 200); // Call API every 2s
     });
 
   </script>
